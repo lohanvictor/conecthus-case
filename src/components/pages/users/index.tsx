@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Eye, Pencil, Trash } from "lucide-react";
 import { User } from "@/services/UserService";
 import { ViewUserSheet } from "./ViewUserSheet";
+import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 
 type Props = {
   users: User[];
@@ -16,30 +17,48 @@ type Props = {
 export function UsersPage(props: Props) {
   const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [selectedUserToDelete, setSelectedUserToDelete] = useState<User | null>(null);
+  const [selectedUserToDelete, setSelectedUserToDelete] = useState<User | null>(
+    null
+  );
 
   function handleSearch(value: string) {
     setSearch(value);
+  }
+
+  function handleDeleteUser(id: string) {
+    console.log(id);
+    setSelectedUserToDelete(null);
   }
 
   const COLUMNS: TableColumn<User>[] = [
     {
       key: "name",
       label: "Nome",
+      classHeader: "bg-[#0D1931] text-white rounded-tl-md rounded-bl-md",
     },
     {
       label: "Ações",
       key: "actions",
-      classHeader: "w-40",
-      render: (value) => (
+      classHeader: "w-40 bg-[#0D1931] text-white rounded-tr-md rounded-br-md",
+      render: (user) => (
         <div className="flex items-center gap-2">
-          <Button variant="link" size="sm" onClick={() => setSelectedUser(value)} className="cursor-pointer">
+          <Button
+            variant="link"
+            size="sm"
+            onClick={() => setSelectedUser(user)}
+            className="cursor-pointer"
+          >
             <Eye className="size-4" />
           </Button>
-          <Link href={`/users/${value.id}/edit`}>
-            <Pencil className="size-4" />
+          <Link href={`/users/${user.id}/edit`}>
+            <Pencil className="size-4 cursor-pointer" />
           </Link>
-          <Button variant="link" size="sm">
+          <Button
+            variant="link"
+            size="sm"
+            onClick={() => setSelectedUserToDelete(user)}
+            className="cursor-pointer"
+          >
             <Trash className="size-4" />
           </Button>
         </div>
@@ -56,6 +75,25 @@ export function UsersPage(props: Props) {
           open={!!selectedUser}
           onOpenChange={(open) => setSelectedUser(open ? props.users[0] : null)}
           user={selectedUser}
+        />
+      )}
+
+      {selectedUserToDelete && (
+        <ConfirmDialog
+          open={!!selectedUserToDelete}
+          onOpenChange={(open) =>
+            setSelectedUserToDelete(open ? props.users[0] : null)
+          }
+          title="Deseja excluir?"
+          description={`O usuário ${selectedUserToDelete.name} será excluído.`}
+          cancelButton={{
+            label: "Cancelar",
+            onClick: () => setSelectedUserToDelete(null),
+          }}
+          confirmButton={{
+            label: "Excluir",
+            onClick: () => handleDeleteUser(selectedUserToDelete.id),
+          }}
         />
       )}
 
