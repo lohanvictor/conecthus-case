@@ -9,20 +9,22 @@ import { Eye, Pencil, Trash } from "lucide-react";
 import { User } from "@/services/UserService";
 import { ViewUserSheet } from "./ViewUserSheet";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
+import { SearchInput } from "@/components/common/SearchInput";
+import { useCustomSearchParams } from "@/hooks/useCustomSearchParams";
 
 type Props = {
   users: User[];
 };
 
 export function UsersPage(props: Props) {
-  const [search, setSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [selectedUserToDelete, setSelectedUserToDelete] = useState<User | null>(
     null
   );
+  const { updateSearch } = useCustomSearchParams();
 
   function handleSearch(value: string) {
-    setSearch(value);
+    updateSearch(value);
   }
 
   function handleDeleteUser(id: string) {
@@ -98,13 +100,9 @@ export function UsersPage(props: Props) {
       )}
 
       <div className="flex items-center justify-between mt-4">
-        <input
-          type="text"
-          placeholder="Pesquisar usuários..."
-          value={search}
-          onChange={(e) => handleSearch(e.target.value)}
-          className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-[#0290A4] transition-colors w-72"
-        />
+        <div className="max-w-[300px]">
+          <SearchInput onChange={handleSearch} />
+        </div>
 
         <Link
           className="text-white text-sm font-medium rounded-md px-4 py-2 cursor-pointer bg-[#0290A4] hover:bg-[#0290A4]/90"
