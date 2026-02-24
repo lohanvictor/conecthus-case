@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ChevronLeft } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 import { Breadcrumb } from "./Breadcrumb";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";

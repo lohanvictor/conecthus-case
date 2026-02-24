@@ -1,6 +1,6 @@
 import { CreateUser, User } from "@/services/UserService";
 
-export function nextId() {
+function nextId() {
     return crypto.randomUUID()
 }
 

@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# WenLock - Desafio Técnico Instituto Conecthus
 
-## Getting Started
+Este projeto foi desenvolvido como parte do **teste técnico para o Instituto Conecthus**. É uma aplicação web de gerenciamento de usuários feita em Next.js.
 
-First, run the development server:
+## Bibliotecas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+As principais bibliotecas utilizadas:
+
+| Nome        | Versão | Documentação                                         |
+| ----------- | ------ | ---------------------------------------------------- |
+| next        | 16.1.6 | [nextjs.org/docs](https://nextjs.org/docs)           |
+| react       | 19.2.3 | [react.dev](https://react.dev)                       |
+| tailwindcss | ^4     | [tailwindcss.com/docs](https://tailwindcss.com/docs) |
+| eslint      | ^10    | [eslint.org/docs](https://eslint.org/docs)           |
+| shadcn/ui   | -      | [shadcn/ui](https://ui.shadcn.com/)                  |
+
+## Funcionalidades
+
+- Sidebar colapsável com navegação
+- Listagem de usuários com busca por texto
+- Cadastro de usuários com validação de formulário
+- Visualização de detalhes do usuário
+- Exclusão de usuários com modal de confirmação
+
+## Estrutura do Projeto
+
+```
+src/
+├── app/                        # Rotas (App Router)
+│   ├── api/users/              # API Routes (GET, POST, DELETE)
+│   └── (private)/              # Páginas autenticadas
+│       ├── (home)/             # Home (/)
+│       └── users/              # Usuários (/users, /users/create)
+├── components/
+│   ├── common/                 # Componentes reutilizáveis
+│   ├── pages/                  # Componentes específicos de página
+│   └── ui/                     # Primitivos shadcn/ui
+├── hooks/                      # Hooks customizados
+├── lib/                        # Utilitários e API client
+└── services/                   # Tipos e definições de serviço
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Como Rodar
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Desenvolvimento
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev
+```
 
-## Learn More
+A aplicação estará disponível em `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+### Docker
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```shell
+docker compose up -d --build
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## API Routes
 
-## Deploy on Vercel
+| Método | Rota                      | Descrição                            |
+| ------ | ------------------------- | ------------------------------------ |
+| GET    | `/api/users?search=texto` | Lista usuários (com filtro opcional) |
+| POST   | `/api/users`              | Cria um novo usuário                 |
+| DELETE | `/api/users/:id`          | Remove um usuário                    |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+> O armazenamento é feito em memória (dados são resetados ao reiniciar o servidor).
