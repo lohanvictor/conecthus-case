@@ -36,7 +36,7 @@ export function TextInput({
               overLimit ? "text-destructive" : "text-muted-foreground"
             }`}
           >
-            {currentLength}/{maxLength}
+            Máx. {maxLength} caracteres
           </span>
         )}
       </div>

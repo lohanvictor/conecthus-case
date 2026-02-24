@@ -25,19 +25,33 @@ export function CreateUserForm() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   }
 
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   const errors = {
     name: !name.trim()
       ? "Campo obrigatório"
+      : !/^[\p{L}\s]+$/u.test(name)
+      ? "Apenas letras são permitidas"
       : name.length > 30
       ? "Máximo de 30 caracteres"
       : "",
-    registration: !registration.trim() ? "Campo obrigatório" : "",
+    registration: !registration.trim()
+      ? "Campo obrigatório"
+      : !/^\d+$/.test(registration)
+      ? "Apenas números são permitidos"
+      : "",
     email: !email.trim()
       ? "Campo obrigatório"
+      : !EMAIL_REGEX.test(email)
+      ? "E-mail inválido"
       : email.length > 40
       ? "Máximo de 40 caracteres"
       : "",
-    password: !password ? "Campo obrigatório" : "",
+    password: !password
+      ? "Campo obrigatório"
+      : !/^[a-zA-Z0-9]{6}$/.test(password)
+      ? "A senha deve ter exatamente 6 dígitos alfanuméricos"
+      : "",
     confirmPassword: !confirmPassword
       ? "Campo obrigatório"
       : confirmPassword !== password
@@ -62,7 +76,7 @@ export function CreateUserForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-2">
+    <form onSubmit={handleSubmit} className="space-y-2 p-4 bg-white rounded-md">
       <section className="space-y-4">
         <SectionTitle title="Dados do Usuário" />
 
@@ -70,9 +84,12 @@ export function CreateUserForm() {
           <TextInput
             id="name"
             label="Nome Completo *"
-            placeholder="Insira o nome completo"
+            placeholder="Insira o nome completo*"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || /^[\p{L}\s]+$/u.test(value)) setName(value);
+            }}
             onBlur={() => markTouched("name")}
             error={touched.name ? errors.name : undefined}
             maxLength={30}
@@ -82,9 +99,12 @@ export function CreateUserForm() {
           <TextInput
             id="registration"
             label="Nº da Matrícula *"
-            placeholder="Insira o Nº da matrícula"
+            placeholder="Insira o Nº da matrícula*"
             value={registration}
-            onChange={(e) => setRegistration(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || /^\d+$/.test(value)) setRegistration(value);
+            }}
             onBlur={() => markTouched("registration")}
             error={touched.registration ? errors.registration : undefined}
           />
@@ -115,7 +135,11 @@ export function CreateUserForm() {
             label="Senha *"
             placeholder="Insira a senha"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            maxLength={6}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || /^[a-zA-Z0-9]*$/.test(value)) setPassword(value);
+            }}
             onBlur={() => markTouched("password")}
             error={touched.password ? errors.password : undefined}
           />
@@ -125,7 +149,11 @@ export function CreateUserForm() {
             label="Repetir Senha *"
             placeholder="Repita a senha"
             value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
+            maxLength={6}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "" || /^[a-zA-Z0-9]*$/.test(value)) setConfirmPassword(value);
+            }}
             onBlur={() => markTouched("confirmPassword")}
             error={touched.confirmPassword ? errors.confirmPassword : undefined}
           />
@@ -133,7 +161,7 @@ export function CreateUserForm() {
       </section>
 
       <div className="flex justify-end gap-3 pt-2">
-        <Button type="button" variant="outline">
+        <Button type="button" variant="link" className="border rounded-md cursor-pointer">
           Cancelar
         </Button>
         <Button

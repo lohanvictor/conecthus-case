@@ -1,5 +1,3 @@
-"use client";
-
 import { PageHeader } from "@/components/common/PageHeader";
 import { CreateUserForm } from "./CreateUserForm";
 
