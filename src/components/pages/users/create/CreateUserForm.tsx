@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/common/TextInput";
 import { PasswordInput } from "@/components/common/PasswordInput";
-import { SectionTitle } from "./SectionTitle";
+import { SectionTitle } from "@/components/common/SectionTitle";
 
 export function CreateUserForm() {
   const [name, setName] = useState("");
