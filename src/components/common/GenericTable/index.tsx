@@ -38,9 +38,6 @@ export function GenericTable<T>({
   pagination,
   emptyMessage = "Nenhum dado encontrado",
 }: TableProps<T>) {
-  if (data.length === 0) {
-    return <div className="text-center text-muted-foreground">{emptyMessage}</div>;
-  }
   return (
     <div className=" overflow-hidden w-full">
       <div className="overflow-x-auto">

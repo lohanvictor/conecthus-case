@@ -31,6 +31,11 @@ export async function callApi<T>(
         let url = `${getBaseUrl()}${path}`;
         if (params) url += `?${new URLSearchParams(params).toString()}`;
 
+        console.log("Calling API: ", url);
+        console.log("Method: ", method);
+        console.log("Body: ", body);
+        console.log("Params: ", params);
+
         const response = await fetch(url, {
             method,
             headers: { "Content-Type": "application/json" },
