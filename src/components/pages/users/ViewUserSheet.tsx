@@ -34,6 +34,14 @@ export function ViewUserSheet({
 }: ViewUserSheetProps) {
   if (!user) return null;
 
+  function formatDate(date: string) {
+    return new Date(date).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  }
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent showCloseButton={false} className="sm:max-w-md">
@@ -62,8 +70,8 @@ export function ViewUserSheet({
           <section className="space-y-4">
             <SectionTitle title="Detalhes" />
             <div className="grid grid-cols-2 gap-4">
-              <InfoItem label="Data de criação" value={user.createdAt} />
-              <InfoItem label="Última edição" value={user.updatedAt} />
+              <InfoItem label="Data de criação" value={formatDate(user.createdAt)} />
+              <InfoItem label="Última edição" value={formatDate(user.updatedAt)} />
             </div>
           </section>
         </div>

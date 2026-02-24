@@ -11,6 +11,8 @@ import { ViewUserSheet } from "./ViewUserSheet";
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { SearchInput } from "@/components/common/SearchInput";
 import { useCustomSearchParams } from "@/hooks/useCustomSearchParams";
+import { callApi } from "@/lib/callApi";
+import { useRouter } from "next/navigation";
 
 type Props = {
   users: User[];
@@ -22,14 +24,22 @@ export function UsersPage(props: Props) {
     null
   );
   const { updateSearch } = useCustomSearchParams();
+  const router = useRouter();
 
   function handleSearch(value: string) {
     updateSearch(value);
   }
 
-  function handleDeleteUser(id: string) {
-    console.log(id);
+  async function handleDeleteUser(id: string) {
     setSelectedUserToDelete(null);
+    const {error} = await callApi<null>("/api/users/" + id, {
+      method: "DELETE",
+    });
+    if (error) {
+      alert(error.message);
+      return;
+    }
+    router.refresh();
   }
 
   const COLUMNS: TableColumn<User>[] = [

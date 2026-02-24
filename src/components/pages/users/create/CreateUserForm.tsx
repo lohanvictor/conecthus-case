@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/common/TextInput";
 import { PasswordInput } from "@/components/common/PasswordInput";
 import { SectionTitle } from "@/components/common/SectionTitle";
+import { useRouter } from "next/navigation";
+import { callApi } from "@/lib/callApi";
 
 export function CreateUserForm() {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [registration, setRegistration] = useState("");
   const [email, setEmail] = useState("");
@@ -61,7 +64,7 @@ export function CreateUserForm() {
 
   const isFormValid = Object.values(errors).every((e) => e === "");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     setTouched({
@@ -73,6 +76,23 @@ export function CreateUserForm() {
     });
 
     if (!isFormValid) return;
+    
+    const {error} = await callApi<null>("/api/users", {
+      method: "POST",
+      body: {
+        name,
+        registration,
+        email,
+        password,
+      },
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push("/users");
   }
 
   return (
@@ -161,7 +181,7 @@ export function CreateUserForm() {
       </section>
 
       <div className="flex justify-end gap-3 pt-2">
-        <Button type="button" variant="link" className="border rounded-md cursor-pointer">
+        <Button type="button" variant="link" className="border rounded-md cursor-pointer" onClick={() => router.push("/users")}>
           Cancelar
         </Button>
         <Button
