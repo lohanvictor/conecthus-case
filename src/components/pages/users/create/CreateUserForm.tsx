@@ -10,11 +10,11 @@ import { callApi } from "@/lib/callApi";
 
 export function CreateUserForm() {
   const router = useRouter();
-  const [name, setName] = useState("");
-  const [registration, setRegistration] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [registrationInput, setRegistrationInput] = useState("");
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
 
   const [touched, setTouched] = useState({
     name: false,
@@ -28,38 +28,39 @@ export function CreateUserForm() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   }
 
-  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  function validate(...rules: [boolean, string][]): string {
+    for (const [condition, message] of rules) {
+      if (condition) return message;
+    }
+    return "";
+  }
 
   const errors = {
-    name: !name.trim()
-      ? "Campo obrigatório"
-      : !/^[\p{L}\s]+$/u.test(name)
-      ? "Apenas letras são permitidas"
-      : name.length > 30
-      ? "Máximo de 30 caracteres"
-      : "",
-    registration: !registration.trim()
-      ? "Campo obrigatório"
-      : !/^\d+$/.test(registration)
-      ? "Apenas números são permitidos"
-      : "",
-    email: !email.trim()
-      ? "Campo obrigatório"
-      : !EMAIL_REGEX.test(email)
-      ? "E-mail inválido"
-      : email.length > 40
-      ? "Máximo de 40 caracteres"
-      : "",
-    password: !password
-      ? "Campo obrigatório"
-      : !/^[a-zA-Z0-9]{6}$/.test(password)
-      ? "A senha deve ter exatamente 6 dígitos alfanuméricos"
-      : "",
-    confirmPassword: !confirmPassword
-      ? "Campo obrigatório"
-      : confirmPassword !== password
-      ? "As senhas não coincidem"
-      : "",
+    name: validate(
+      [!nameInput.trim(), "Campo obrigatório"],
+      [!/^[\p{L}\s]+$/u.test(nameInput), "Apenas letras são permitidas"],
+      [nameInput.length > 30, "Máximo de 30 caracteres"]
+    ),
+    registration: validate(
+      [!registrationInput.trim(), "Campo obrigatório"],
+      [!/^\d+$/.test(registrationInput), "Apenas números são permitidos"]
+    ),
+    email: validate(
+      [!emailInput.trim(), "Campo obrigatório"],
+      [!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput), "E-mail inválido"],
+      [emailInput.length > 40, "Máximo de 40 caracteres"]
+    ),
+    password: validate(
+      [!passwordInput, "Campo obrigatório"],
+      [
+        !/^[a-zA-Z0-9]{6}$/.test(passwordInput),
+        "A senha deve ter exatamente 6 dígitos alfanuméricos",
+      ]
+    ),
+    confirmPassword: validate(
+      [!confirmPasswordInput, "Campo obrigatório"],
+      [confirmPasswordInput !== passwordInput, "As senhas não coincidem"]
+    ),
   };
 
   const isFormValid = Object.values(errors).every((e) => e === "");
@@ -76,14 +77,14 @@ export function CreateUserForm() {
     });
 
     if (!isFormValid) return;
-    
-    const {error} = await callApi<null>("/api/users", {
+
+    const { error } = await callApi<null>("/api/users", {
       method: "POST",
       body: {
-        name,
-        registration,
-        email,
-        password,
+        name: nameInput,
+        registration: registrationInput,
+        email: emailInput,
+        password: passwordInput,
       },
     });
 
@@ -105,25 +106,25 @@ export function CreateUserForm() {
             id="name"
             label="Nome Completo *"
             placeholder="Insira o nome completo*"
-            value={name}
+            value={nameInput}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^[\p{L}\s]+$/u.test(value)) setName(value);
+              if (value === "" || /^[\p{L}\s]+$/u.test(value)) setNameInput(value);
             }}
             onBlur={() => markTouched("name")}
             error={touched.name ? errors.name : undefined}
             maxLength={30}
-            currentLength={name.length}
+            currentLength={nameInput.length}
           />
 
           <TextInput
             id="registration"
             label="Nº da Matrícula *"
             placeholder="Insira o Nº da matrícula*"
-            value={registration}
+            value={registrationInput}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^\d+$/.test(value)) setRegistration(value);
+              if (value === "" || /^\d+$/.test(value)) setRegistrationInput(value);
             }}
             onBlur={() => markTouched("registration")}
             error={touched.registration ? errors.registration : undefined}
@@ -135,12 +136,12 @@ export function CreateUserForm() {
               label="E-mail *"
               type="email"
               placeholder="Insira o e-mail"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
               onBlur={() => markTouched("email")}
               error={touched.email ? errors.email : undefined}
               maxLength={40}
-              currentLength={email.length}
+              currentLength={emailInput.length}
             />
           </div>
         </div>
@@ -154,11 +155,12 @@ export function CreateUserForm() {
             id="password"
             label="Senha *"
             placeholder="Insira a senha"
-            value={password}
+            value={passwordInput}
             maxLength={6}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^[a-zA-Z0-9]*$/.test(value)) setPassword(value);
+              if (value === "" || /^[a-zA-Z0-9]*$/.test(value))
+                setPasswordInput(value);
             }}
             onBlur={() => markTouched("password")}
             error={touched.password ? errors.password : undefined}
@@ -168,11 +170,12 @@ export function CreateUserForm() {
             id="confirmPassword"
             label="Repetir Senha *"
             placeholder="Repita a senha"
-            value={confirmPassword}
+            value={confirmPasswordInput}
             maxLength={6}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^[a-zA-Z0-9]*$/.test(value)) setConfirmPassword(value);
+              if (value === "" || /^[a-zA-Z0-9]*$/.test(value))
+                setConfirmPasswordInput(value);
             }}
             onBlur={() => markTouched("confirmPassword")}
             error={touched.confirmPassword ? errors.confirmPassword : undefined}
@@ -181,7 +184,12 @@ export function CreateUserForm() {
       </section>
 
       <div className="flex justify-end gap-3 pt-2">
-        <Button type="button" variant="link" className="border rounded-md cursor-pointer" onClick={() => router.push("/users")}>
+        <Button
+          type="button"
+          variant="link"
+          className="border rounded-md cursor-pointer"
+          onClick={() => router.push("/users")}
+        >
           Cancelar
         </Button>
         <Button

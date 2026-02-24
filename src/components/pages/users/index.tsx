@@ -17,6 +17,7 @@ import { SearchInput } from "@/components/common/SearchInput";
 import { useCustomSearchParams } from "@/hooks/useCustomSearchParams";
 import { callApi } from "@/lib/callApi";
 import { useRouter } from "next/navigation";
+import { DeleteUserDialog } from "./DeleteUserDialog";
 
 type Props = {
   users: User[];
@@ -97,21 +98,11 @@ export function UsersPage(props: Props) {
       )}
 
       {selectedUserToDelete && (
-        <ConfirmDialog
-          open={!!selectedUserToDelete}
-          onOpenChange={(open) =>
-            setSelectedUserToDelete(open ? props.users[0] : null)
-          }
-          title="Deseja excluir?"
-          description={`O usuário ${selectedUserToDelete.name} será excluído.`}
-          cancelButton={{
-            label: "Cancelar",
-            onClick: () => setSelectedUserToDelete(null),
-          }}
-          confirmButton={{
-            label: "Excluir",
-            onClick: () => handleDeleteUser(selectedUserToDelete.id),
-          }}
+        <DeleteUserDialog
+          onOpenChange={(open) => setSelectedUserToDelete(open ? selectedUserToDelete : null)}
+          user={selectedUserToDelete}
+          onCancel={() => setSelectedUserToDelete(null)}
+          onConfirm={() => handleDeleteUser(selectedUserToDelete.id)}
         />
       )}
 
@@ -137,8 +128,8 @@ export function UsersPage(props: Props) {
             page: props.pagination.page,
             totalPages: props.pagination.totalPages,
             totalItems: props.pagination.totalItems,
-            onFirstPage: () => null, // TODO: Implementar
-            onLastPage: () => null, // TODO: Implementar
+            onFirstPage: () => updatePage(1),
+            onLastPage: () => updatePage(props.pagination.totalPages),
             onNextPage: () =>
               updatePage((props.pagination.page + 1).toString()),
             onPreviousPage: () =>

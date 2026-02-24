@@ -85,7 +85,7 @@ export function Pagination({
                 }
               }}
               className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
               }
             />
           </UI.PaginationItem>
@@ -101,7 +101,7 @@ export function Pagination({
                 }
               }}
               className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"
               }
             />
           </UI.PaginationItem>
@@ -124,6 +124,7 @@ export function Pagination({
                   e.preventDefault();
                   handlePageClick(pageNum);
                 }}
+                className="cursor-pointer"
               >
                 {pageNum}
               </UI.PaginationLink>
@@ -143,7 +144,7 @@ export function Pagination({
               className={
                 currentPage === totalPages || totalPages === 0
                   ? "pointer-events-none opacity-50"
-                  : ""
+                  : "cursor-pointer"
               }
             />
           </UI.PaginationItem>
@@ -161,7 +162,7 @@ export function Pagination({
               className={
                 currentPage === totalPages || totalPages === 0
                   ? "pointer-events-none opacity-50"
-                  : ""
+                  : "cursor-pointer"
               }
             />
           </UI.PaginationItem>

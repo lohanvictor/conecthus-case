@@ -29,7 +29,7 @@ export type TableProps<T> = {
   columns: TableColumn<T>[];
   data: T[];
   pagination?: Pagination;
-  emptyMessage?: string;
+  emptyMessage?: React.ReactNode;
 };
 
 export function GenericTable<T>({
