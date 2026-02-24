@@ -9,7 +9,7 @@ type Props = {
 export function Button(props: React.PropsWithChildren<Props>) {
   return (
     <ButtonUI
-      className={`cursor-pointer bg-[#0290A4] hover:bg-[#027a8b] ${props.className}`}
+      className={`cursor-pointer ${props.className}`}
       onClick={props.onClick}
     >
       {Boolean(props.leftIcon) && props.leftIcon}

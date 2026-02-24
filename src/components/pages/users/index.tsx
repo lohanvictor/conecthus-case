@@ -24,7 +24,7 @@ export function UsersPage() {
           className="border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:border-[#0290A4] transition-colors w-72"
         />
 
-        <Button className="text-white text-sm font-medium rounded-md px-4 py-2 cursor-pointer transition-opacity hover:opacity-10 bg-[#0290A4]">
+        <Button className="text-white text-sm font-medium rounded-md px-4 py-2 cursor-pointer bg-[#0290A4] hover:bg-[#0290A4]/90">
           + Cadastrar Usuário
         </Button>
       </div>
