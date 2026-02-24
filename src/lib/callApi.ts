@@ -8,14 +8,20 @@ type ApiRequest = {
     params?: Record<string, string>;
 };
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+function getBaseUrl(): string {
+    if (process.env.NODE_ENV === "production" && process.env.VERCEL_URL) {
+        return `https://${process.env.VERCEL_URL}`;
+    } else {
+        return "http://localhost:3000";
+    }
+}
 
 export async function callApi<T>(
     path: string,
     { body, params, method = "GET" }: ApiRequest = {}
 ): Promise<ApiResponse<T>> {
     try {
-        let url = `${BASE_URL}${path}`;
+        let url = `${getBaseUrl()}${path}`;
         if (params) url += `?${new URLSearchParams(params).toString()}`;
 
         const response = await fetch(url, {
