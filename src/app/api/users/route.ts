@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { create, getAll } from "@/lib/usersStore";
+import { NextResponse } from "next/server";
 
 const PAGE_SIZE = 5;
 

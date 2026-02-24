@@ -15,6 +15,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
@@ -34,11 +35,12 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="p-4">
+      <SidebarHeader className="p-4 relative">
         <span className="text-lg font-bold text-white">
           <span className="group-data-[collapsible=icon]:hidden">WenLock</span>
           <span className="hidden group-data-[collapsible=icon]:block">WL</span>
         </span>
+        <SidebarTrigger className="absolute right-[-16px] top-1/2 -translate-y-1/2" />
       </SidebarHeader>
 
       <SidebarContent>
