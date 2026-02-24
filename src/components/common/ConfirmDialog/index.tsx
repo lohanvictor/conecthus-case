@@ -45,7 +45,7 @@ export function ConfirmDialog({
             {cancelButton.label}
           </Button>
           <Button
-            className="bg-[#0290A4] hover:bg-[#0290A4]/90 text-white cursor-pointer"
+            className="bg-brand hover:bg-brand/90 text-white cursor-pointer"
             onClick={confirmButton.onClick}
           >
             {confirmButton.label}

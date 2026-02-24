@@ -7,6 +7,10 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand: var(--brand);
+  --color-table-header: var(--table-header);
+  --color-surface: var(--surface);
+  --color-heading: var(--heading);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -49,6 +53,10 @@
 
 :root {
   --radius: 0.625rem;
+  --brand: #0290A4;
+  --table-header: #0D1931;
+  --surface: #F3F3F3;
+  --heading: #272846;
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0.028 261.692);
   --card: oklch(1 0 0);

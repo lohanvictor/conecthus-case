@@ -36,12 +36,12 @@ export function UsersPage(props: Props) {
     {
       key: "name",
       label: "Nome",
-      classHeader: "bg-[#0D1931] text-white rounded-tl-md rounded-bl-md",
+      classHeader: "bg-table-header text-white rounded-tl-md rounded-bl-md",
     },
     {
       label: "Ações",
       key: "actions",
-      classHeader: "w-40 bg-[#0D1931] text-white rounded-tr-md rounded-br-md",
+      classHeader: "w-40 bg-table-header text-white rounded-tr-md rounded-br-md",
       render: (user) => (
         <div className="flex items-center gap-2">
           <Button
@@ -105,7 +105,7 @@ export function UsersPage(props: Props) {
         </div>
 
         <Link
-          className="text-white text-sm font-medium rounded-md px-4 py-2 cursor-pointer bg-[#0290A4] hover:bg-[#0290A4]/90"
+          className="text-white text-sm font-medium rounded-md px-4 py-2 cursor-pointer bg-brand hover:bg-brand/90"
           href="/users/create"
         >
           + Cadastrar Usuário

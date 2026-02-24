@@ -11,5 +11,5 @@ export default function PrivateLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="p-4 bg-[#F3F3F3] h-full w-full">{children}</div>;
+  return <div className="p-4 bg-surface h-full w-full">{children}</div>;
 }

@@ -14,13 +14,13 @@ export default function Home() {
       <PageHeader title="Home" />
 
       <main className="w-full p-4 flex flex-col gap-2 bg-white">
-        <h1 className="text-2xl font-bold text-[#272846]">Olá Milena!</h1>
-        <p className="text-sm font-semibold text-[#272846]">{formattedDate}</p>
+        <h1 className="text-2xl font-bold text-heading">Olá Milena!</h1>
+        <p className="text-sm font-semibold text-heading">{formattedDate}</p>
 
         <div className="flex-1 flex flex-col gap-2 justify-center items-center w-fit self-center">
           <Image src={groupHome} alt="Logo" width={400} />
-          <div className="w-full px-4 py-2 border rounded-md border-[#272846] text-center">
-            <span className="text-md font-bold text-[#272846]">Bem-vindo ao WenLock!</span>
+          <div className="w-full px-4 py-2 border rounded-md border-heading text-center">
+            <span className="text-md font-bold text-heading">Bem-vindo ao WenLock!</span>
           </div>
         </div>
       </main>

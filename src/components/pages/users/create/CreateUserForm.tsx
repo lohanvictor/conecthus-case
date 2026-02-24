@@ -139,7 +139,7 @@ export function CreateUserForm() {
         <Button
           type="submit"
           disabled={!isFormValid}
-          className="bg-[#0290A4] hover:bg-[#0290A4]/90 text-white"
+          className="bg-brand hover:bg-brand/90 text-white"
         >
           Cadastrar
         </Button>
