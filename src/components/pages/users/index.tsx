@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/common/PageHeader";
 import { Button } from "@/components/common/Button";
+import { GenericTable } from "@/components/common/GenericTable";
 
 export function UsersPage() {
   const [search, setSearch] = useState("");
@@ -12,7 +13,7 @@ export function UsersPage() {
   }
 
   return (
-    <div>
+    <div className="w-full h-full space-y-2">
       <PageHeader title="Usuários" />
 
       <div className="flex items-center justify-between mt-4">
@@ -28,6 +29,16 @@ export function UsersPage() {
           + Cadastrar Usuário
         </Button>
       </div>
+
+      <main className="w-full flex">
+
+        <GenericTable columns={[]} data={[]} emptyMessage="Nenhum usuário encontrado" pagination={{
+          page: 1,
+          total: 3,
+          onNextPage: () => null,
+          onPreviousPage: () => null,
+        }} />
+      </main>
     </div>
   );
 }
