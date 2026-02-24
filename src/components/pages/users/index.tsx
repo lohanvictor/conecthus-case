@@ -38,7 +38,7 @@ export function UsersPage(props: Props) {
 
   async function handleDeleteUser(id: string) {
     setSelectedUserToDelete(null);
-    const { error } = await callApi<null>("/api/users/" + id, {
+    const { error } = await callApi("/api/users/" + id, {
       method: "DELETE",
     });
     if (error) {

@@ -78,7 +78,7 @@ export function CreateUserForm() {
 
     if (!isFormValid) return;
 
-    const { error } = await callApi<null>("/api/users", {
+    const { error } = await callApi("/api/users", {
       method: "POST",
       body: {
         name: nameInput,

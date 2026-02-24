@@ -23,7 +23,7 @@ function getBaseUrl(): string {
     }
 }
 
-export async function callApi<T>(
+export async function callApi<T = unknown>(
     path: string,
     { body, params, method = "GET" }: ApiRequest = {}
 ): Promise<ApiResponse<T>> {
@@ -31,10 +31,10 @@ export async function callApi<T>(
         let url = `${getBaseUrl()}${path}`;
         if (params) url += `?${new URLSearchParams(params).toString()}`;
 
-        console.log("Calling API: ", url);
-        console.log("Method: ", method);
-        console.log("Body: ", body);
-        console.log("Params: ", params);
+        console.log("[Calling API] URL: ", url);
+        console.log("[Calling API] Method: ", method);
+        console.log("[Calling API] Body: ", body);
+        console.log("[Calling API] Params: ", params);
 
         const response = await fetch(url, {
             method,
@@ -43,6 +43,7 @@ export async function callApi<T>(
         });
 
         if (!response.ok) {
+            console.log("[Calling API] Error: ", await response.text());
             return {
                 data: null,
                 error: {
@@ -53,6 +54,7 @@ export async function callApi<T>(
         }
 
         const data = (await response.json()) as T;
+        console.log("[Calling API] Response: ", response);
         return { data, error: null };
     } catch (error: unknown) {
         const message =
