@@ -1,4 +1,4 @@
-import { create, getAll } from "@/services/userRepository";
+import { create, getAll } from "@/services/usersRepository";
 import { NextResponse } from "next/server";
 
 const PAGE_SIZE = 5;

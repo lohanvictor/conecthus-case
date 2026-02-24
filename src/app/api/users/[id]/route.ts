@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getById, update, remove } from "@/services/userRepository";
+import { getById, update, remove } from "@/services/usersRepository";
 
 type Params = { params: Promise<{ id: string }> };
 

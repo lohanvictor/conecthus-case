@@ -1,6 +1,6 @@
 import { EditUserPage } from "@/components/pages/users/edit";
 import { UserNotFound } from "@/components/pages/users/edit/UserNotFound";
-import { getUserById } from "@/services/userService";
+import { getUserById } from "@/services/usersService";
 
 type Props = {
   params: Promise<{ id: string }>;

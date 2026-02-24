@@ -1,5 +1,5 @@
 import { UsersPage } from "@/components/pages/users";
-import { getUsers } from "@/services/userService";
+import { getUsers } from "@/services/usersService";
 
 type Props = {
   searchParams: Promise<{

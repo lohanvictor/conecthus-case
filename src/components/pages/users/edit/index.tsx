@@ -3,7 +3,7 @@
 import { PageHeader } from "@/components/common/PageHeader";
 import { UserForm } from "../UserForm";
 import { useRouter } from "next/navigation";
-import { User } from "@/services/UserService";
+import { User } from "@/services/usersService";
 import { callApi } from "@/lib/callApi";
 
 type Props = {

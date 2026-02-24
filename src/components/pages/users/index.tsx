@@ -10,9 +10,8 @@ import {
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Eye, Pencil, Trash } from "lucide-react";
-import { User } from "@/services/UserService";
+import { User } from "@/services/usersService";
 import { ViewUserSheet } from "./ViewUserSheet";
-import { ConfirmDialog } from "@/components/common/ConfirmDialog";
 import { SearchInput } from "@/components/common/SearchInput";
 import { useCustomSearchParams } from "@/hooks/useCustomSearchParams";
 import { callApi } from "@/lib/callApi";

@@ -5,9 +5,7 @@ import { Button } from "@/components/ui/button";
 import { TextInput } from "@/components/common/TextInput";
 import { PasswordInput } from "@/components/common/PasswordInput";
 import { SectionTitle } from "@/components/common/SectionTitle";
-import { useRouter } from "next/navigation";
-import { callApi } from "@/lib/callApi";
-import { User } from "@/services/userService";
+import { User } from "@/services/usersService";
 
 type Props = {
   onSuccess: (user: Partial<User>) => void;

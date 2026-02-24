@@ -1,4 +1,4 @@
-import { CreateUser, User } from "@/services/UserService";
+import { CreateUser, User } from "./usersService";
 
 function nextId() {
     return crypto.randomUUID()

@@ -4,9 +4,7 @@ import { PageHeader } from "@/components/common/PageHeader";
 import { UserForm } from "../UserForm";
 import { useRouter } from "next/navigation";
 import { callApi } from "@/lib/callApi";
-import { CreateUser, User } from "@/services/userService";
-
-type Props = {};
+import { User } from "@/services/usersService";
 
 export function CreateUserPage() {
   const router = useRouter();
@@ -35,7 +33,10 @@ export function CreateUserPage() {
         canBack
       />
 
-      <UserForm onSuccess={handleCreateUser} onCancel={() => router.push("/users")} />
+      <UserForm
+        onSuccess={handleCreateUser}
+        onCancel={() => router.push("/users")}
+      />
     </div>
   );
 }
