@@ -1,3 +1,10 @@
+export type PaginatedResponse<T> = {
+    items: T[];
+    page: number;
+    totalPages: number;
+    totalItems: number;
+};
+
 type ApiResponse<T> =
     | { data: T; error: null }
     | { data: null; error: { message: string; code: number } };

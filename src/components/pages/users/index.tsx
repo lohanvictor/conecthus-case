@@ -2,7 +2,11 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/common/PageHeader";
-import { GenericTable, TableColumn } from "@/components/common/GenericTable";
+import {
+  GenericTable,
+  Pagination,
+  TableColumn,
+} from "@/components/common/GenericTable";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Eye, Pencil, Trash } from "lucide-react";
@@ -16,6 +20,7 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   users: User[];
+  pagination: Pagination;
 };
 
 export function UsersPage(props: Props) {
@@ -23,7 +28,7 @@ export function UsersPage(props: Props) {
   const [selectedUserToDelete, setSelectedUserToDelete] = useState<User | null>(
     null
   );
-  const { updateSearch } = useCustomSearchParams();
+  const { updateSearch, updatePage } = useCustomSearchParams();
   const router = useRouter();
 
   function handleSearch(value: string) {
@@ -32,7 +37,7 @@ export function UsersPage(props: Props) {
 
   async function handleDeleteUser(id: string) {
     setSelectedUserToDelete(null);
-    const {error} = await callApi<null>("/api/users/" + id, {
+    const { error } = await callApi<null>("/api/users/" + id, {
       method: "DELETE",
     });
     if (error) {
@@ -51,7 +56,8 @@ export function UsersPage(props: Props) {
     {
       label: "Ações",
       key: "actions",
-      classHeader: "w-40 bg-table-header text-white rounded-tr-md rounded-br-md",
+      classHeader:
+        "w-40 bg-table-header text-white rounded-tr-md rounded-br-md",
       render: (user) => (
         <div className="flex items-center gap-2">
           <Button
@@ -125,16 +131,18 @@ export function UsersPage(props: Props) {
       <main className="w-full flex">
         <GenericTable
           columns={COLUMNS}
-          data={props.users}
+          data={props.users || []}
           emptyMessage="Nenhum usuário encontrado"
           pagination={{
-            page: 1,
-            totalPages: 1,
-            totalItems: 2,
-            onFirstPage: () => null,
-            onLastPage: () => null,
-            onNextPage: () => null,
-            onPreviousPage: () => null,
+            page: props.pagination.page,
+            totalPages: props.pagination.totalPages,
+            totalItems: props.pagination.totalItems,
+            onFirstPage: () => null, // TODO: Implementar
+            onLastPage: () => null, // TODO: Implementar
+            onNextPage: () =>
+              updatePage((props.pagination.page + 1).toString()),
+            onPreviousPage: () =>
+              updatePage((props.pagination.page - 1).toString()),
           }}
         />
       </main>

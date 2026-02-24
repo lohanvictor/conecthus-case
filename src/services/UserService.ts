@@ -1,4 +1,4 @@
-import { callApi } from "@/lib/callApi";
+import { callApi, PaginatedResponse } from "@/lib/callApi";
 
 export type User = {
     id: string;
@@ -11,15 +11,15 @@ export type User = {
 
 export type CreateUser = Omit<User, "id" | "createdAt" | "updatedAt">;
 
-export async function getUsers(search?: string): Promise<User[]> {
-    const { data, error } = await callApi<User[]>("/api/users", {
-        method: "GET",
+export async function getUsers(search?: string, page?: number): Promise<PaginatedResponse<User>> {
+    const { data, error } = await callApi<PaginatedResponse<User>>("/api/users", {
         params: {
             search: search ?? "",
+            page: page?.toString() ?? "1",
         },
     });
     if (error) {
-        return [];
+        return { items: [], page: 1, totalPages: 1, totalItems: 0 };
     }
     return data;
 }

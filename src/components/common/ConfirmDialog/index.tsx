@@ -41,7 +41,7 @@ export function ConfirmDialog({
         </DialogHeader>
 
         <DialogFooter className="sm:justify-center">
-          <Button variant="outline" onClick={cancelButton.onClick} className="cursor-pointer">
+          <Button variant="outline" onClick={cancelButton.onClick} className="cursor-pointer border-accent text-secondary bg-transparent border-[#272846] text-[#272846]">
             {cancelButton.label}
           </Button>
           <Button

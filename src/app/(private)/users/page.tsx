@@ -4,11 +4,12 @@ import { getUsers } from "@/services/UserService";
 type Props = {
   searchParams: Promise<{
     search?: string;
+    page?: number;
   }>;
 }
 
 export default async function Users(props: Props) {
-  const { search } = await props.searchParams;
-  const users = await getUsers(search);
-  return <UsersPage users={users} />;
+  const { search, page } = await props.searchParams;
+  const { items, ...pagination } = await getUsers(search, page);
+  return <UsersPage users={items} pagination={pagination} />;
 }
