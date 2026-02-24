@@ -1,5 +1,5 @@
 import { ConfirmDialog } from "@/components/common/ConfirmDialog";
-import { User } from "@/services/UserService";
+import { User } from "@/services/userService";
 
 type Props = {
     onOpenChange: (open: boolean) => void;

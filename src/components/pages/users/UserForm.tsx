@@ -7,12 +7,21 @@ import { PasswordInput } from "@/components/common/PasswordInput";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { useRouter } from "next/navigation";
 import { callApi } from "@/lib/callApi";
+import { User } from "@/services/userService";
 
-export function CreateUserForm() {
-  const router = useRouter();
-  const [nameInput, setNameInput] = useState("");
-  const [registrationInput, setRegistrationInput] = useState("");
-  const [emailInput, setEmailInput] = useState("");
+type Props = {
+  onSuccess: (user: Partial<User>) => void;
+  onCancel: () => void;
+  user?: Omit<User, "password">;
+  passwordOptional?: boolean;
+};
+
+export function UserForm(props: Props) {
+  const [nameInput, setNameInput] = useState(props.user?.name ?? "");
+  const [registrationInput, setRegistrationInput] = useState(
+    props.user?.registration ?? ""
+  );
+  const [emailInput, setEmailInput] = useState(props.user?.email ?? "");
   const [passwordInput, setPasswordInput] = useState("");
   const [confirmPasswordInput, setConfirmPasswordInput] = useState("");
 
@@ -51,15 +60,15 @@ export function CreateUserForm() {
       [emailInput.length > 40, "Máximo de 40 caracteres"]
     ),
     password: validate(
-      [!passwordInput, "Campo obrigatório"],
+      [!passwordInput && !props.passwordOptional, "Campo obrigatório"],
       [
-        !/^[a-zA-Z0-9]{6}$/.test(passwordInput),
+        !/^[a-zA-Z0-9]{6}$/.test(passwordInput) && !props.passwordOptional,
         "A senha deve ter exatamente 6 dígitos alfanuméricos",
       ]
     ),
     confirmPassword: validate(
-      [!confirmPasswordInput, "Campo obrigatório"],
-      [confirmPasswordInput !== passwordInput, "As senhas não coincidem"]
+      [!confirmPasswordInput && !props.passwordOptional, "Campo obrigatório"],
+      [confirmPasswordInput !== passwordInput && !props.passwordOptional, "As senhas não coincidem"]
     ),
   };
 
@@ -77,23 +86,11 @@ export function CreateUserForm() {
     });
 
     if (!isFormValid) return;
-
-    const { error } = await callApi("/api/users", {
-      method: "POST",
-      body: {
-        name: nameInput,
-        registration: registrationInput,
-        email: emailInput,
-        password: passwordInput,
-      },
+    props.onSuccess({
+      name: nameInput,
+      registration: registrationInput,
+      email: emailInput,
     });
-
-    if (error) {
-      alert(error.message);
-      return;
-    }
-
-    router.push("/users");
   }
 
   return (
@@ -109,7 +106,8 @@ export function CreateUserForm() {
             value={nameInput}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^[\p{L}\s]+$/u.test(value)) setNameInput(value);
+              if (value === "" || /^[\p{L}\s]+$/u.test(value))
+                setNameInput(value);
             }}
             onBlur={() => markTouched("name")}
             error={touched.name ? errors.name : undefined}
@@ -124,7 +122,8 @@ export function CreateUserForm() {
             value={registrationInput}
             onChange={(e) => {
               const value = e.target.value;
-              if (value === "" || /^\d+$/.test(value)) setRegistrationInput(value);
+              if (value === "" || /^\d+$/.test(value))
+                setRegistrationInput(value);
             }}
             onBlur={() => markTouched("registration")}
             error={touched.registration ? errors.registration : undefined}
@@ -188,7 +187,7 @@ export function CreateUserForm() {
           type="button"
           variant="link"
           className="border rounded-md cursor-pointer"
-          onClick={() => router.push("/users")}
+          onClick={() => props.onCancel()}
         >
           Cancelar
         </Button>

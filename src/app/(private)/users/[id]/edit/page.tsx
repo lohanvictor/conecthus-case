@@ -1,27 +1,28 @@
-"use client";
+import { EditUserPage } from "@/components/pages/users/edit";
+import { UserNotFound } from "@/components/pages/users/edit/UserNotFound";
+import { getUserById } from "@/services/userService";
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeftIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
+type Props = {
+  params: Promise<{ id: string }>;
+};
 
-export default function EditUser() {
-  const router = useRouter();
-
-  function handleGoBack() {
-    router.push("/users");
+export default async function EditUser({ params }: Props) {
+  const { id } = await params;
+  const user = await getUserById(id);
+  if (!user) {
+    return <UserNotFound />;
   }
 
   return (
-    <div className="flex justify-between items-center">
-      <Button
-        type="button"
-        variant="outline"
-        onClick={handleGoBack}
-        className="bg-brand hover:bg-brand/90 text-white"
-      >
-        <ArrowLeftIcon className="w-4 h-4" />
-        Página em construção. Por favor, volte para a página anterior.
-      </Button>
-    </div>
+    <EditUserPage
+      user={{
+        id: user.id,
+        name: user.name,
+        registration: user.registration,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      }}
+    />
   );
 }

@@ -10,7 +10,7 @@ type ApiResponse<T> =
     | { data: null; error: { message: string; code: number } };
 
 type ApiRequest = {
-    method?: "GET" | "POST" | "DELETE";
+    method?: "GET" | "POST" | "DELETE" | "PATCH";
     body?: object;
     params?: Record<string, string>;
 };

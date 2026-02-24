@@ -10,6 +10,7 @@ const users: User[] = [
         name: "Raimundo Neto",
         registration: "1234567890",
         email: "raimundo.neto@example.com",
+        password: "abc123",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
     },
@@ -18,6 +19,7 @@ const users: User[] = [
         name: "João da Silva",
         registration: "1234567891",
         email: "joao.silva@example.com",
+        password: "abc123",
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
     },
@@ -32,6 +34,22 @@ export function getAll(search?: string): User[] {
             u.email.toLowerCase().includes(term) ||
             u.registration.includes(term)
     );
+}
+
+export function getById(id: string): User | undefined {
+    return users.find((u) => u.id === id);
+}
+
+export function update(id: string, data: Partial<CreateUser>): User | null {
+    const index = users.findIndex((u) => u.id === id);
+    if (index === -1) return null;
+    const user = users[index];
+    users[index] = {
+        ...user,
+        ...data,
+        updatedAt: new Date().toISOString(),
+    };
+    return user;
 }
 
 export function remove(id: string): boolean {

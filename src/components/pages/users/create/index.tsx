@@ -1,7 +1,29 @@
+"use client";
+
 import { PageHeader } from "@/components/common/PageHeader";
-import { CreateUserForm } from "./CreateUserForm";
+import { UserForm } from "../UserForm";
+import { useRouter } from "next/navigation";
+import { callApi } from "@/lib/callApi";
+import { CreateUser, User } from "@/services/userService";
+
+type Props = {};
 
 export function CreateUserPage() {
+  const router = useRouter();
+
+  async function handleCreateUser(user: Partial<User>) {
+    const { error } = await callApi("/api/users", {
+      method: "POST",
+      body: user,
+    });
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+
+    router.push("/users");
+  }
   return (
     <div className="space-y-1">
       <PageHeader
@@ -13,7 +35,7 @@ export function CreateUserPage() {
         canBack
       />
 
-      <CreateUserForm />
+      <UserForm onSuccess={handleCreateUser} onCancel={() => router.push("/users")} />
     </div>
   );
 }

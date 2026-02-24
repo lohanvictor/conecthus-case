@@ -1,4 +1,4 @@
-import { create, getAll } from "@/lib/usersStore";
+import { create, getAll } from "@/services/userRepository";
 import { NextResponse } from "next/server";
 
 const PAGE_SIZE = 5;
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
         );
     }
 
-    const user = create({ name, registration, email });
+    const user = create({ name, registration, email, password });
 
     return NextResponse.json(user, { status: 201 });
 }

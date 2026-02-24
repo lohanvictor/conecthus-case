@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { SectionTitle } from "@/components/common/SectionTitle";
 import { X } from "lucide-react";
-import { User } from "@/services/UserService";
+import { User } from "@/services/userService";
 
 interface ViewUserSheetProps {
   open: boolean;
