@@ -23,8 +23,15 @@ const users: User[] = [
     },
 ];
 
-export function getAll(): User[] {
-    return users;
+export function getAll(search?: string): User[] {
+    if (!search) return users;
+    const term = search.toLowerCase();
+    return users.filter(
+        (u) =>
+            u.name.toLowerCase().includes(term) ||
+            u.email.toLowerCase().includes(term) ||
+            u.registration.includes(term)
+    );
 }
 
 export function remove(id: string): boolean {

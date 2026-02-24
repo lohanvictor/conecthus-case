@@ -11,8 +11,13 @@ export type User = {
 
 export type CreateUser = Omit<User, "id" | "createdAt" | "updatedAt">;
 
-export async function getUsers(): Promise<User[]> {
-    const {data, error} = await callApi<User[]>("/api/users");
+export async function getUsers(search?: string): Promise<User[]> {
+    const { data, error } = await callApi<User[]>("/api/users", {
+        method: "GET",
+        params: {
+            search: search ?? "",
+        },
+    });
     if (error) {
         return [];
     }
