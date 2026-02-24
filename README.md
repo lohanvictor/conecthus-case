@@ -2,6 +2,12 @@
 
 Este projeto foi desenvolvido como parte do **teste técnico para o Instituto Conecthus**. É uma aplicação web de gerenciamento de usuários feita em Next.js.
 
+## Acesso
+
+A aplicação pode ser acessada pelo seguinte link:
+
+> [conecthus-case.vercel.app](conecthus-case.vercel.app)
+
 ## Bibliotecas
 
 As principais bibliotecas utilizadas:
