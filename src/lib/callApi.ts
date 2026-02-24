@@ -28,13 +28,8 @@ export async function callApi<T = unknown>(
     { body, params, method = "GET" }: ApiRequest = {}
 ): Promise<ApiResponse<T>> {
     try {
-        let url = `${getBaseUrl()}${path}`;
+        let url = path;
         if (params) url += `?${new URLSearchParams(params).toString()}`;
-
-        console.log("[Calling API] URL: ", url);
-        console.log("[Calling API] Method: ", method);
-        console.log("[Calling API] Body: ", body);
-        console.log("[Calling API] Params: ", params);
 
         const response = await fetch(url, {
             method,
