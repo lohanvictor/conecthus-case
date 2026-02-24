@@ -5,11 +5,14 @@ const SIBLING_COUNT = 1;
 const MINIMUM_PAGES_FOR_ELLIPSIS = 7;
 
 export function Pagination({
-  total,
+  totalPages: total,
   page,
+  totalItems,
   onPageChange,
+  onFirstPage,
   onPreviousPage,
   onNextPage,
+  onLastPage,
   className,
 }: PaginationType) {
   const totalPages = total;
@@ -70,7 +73,24 @@ export function Pagination({
 
   return (
     <UI.Pagination className={className}>
+      <span>Total de itens: {totalItems}</span>
       <UI.PaginationContent>
+        {onFirstPage && (
+          <UI.PaginationItem>
+            <UI.PaginationFirst
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage > 1) {
+                  onFirstPage();
+                }
+              }}
+              className={
+                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+              }
+            />
+          </UI.PaginationItem>
+        )}
+
         {onPreviousPage && (
           <UI.PaginationItem>
             <UI.PaginationPrevious
@@ -118,6 +138,24 @@ export function Pagination({
                 e.preventDefault();
                 if (currentPage < totalPages) {
                   onNextPage();
+                }
+              }}
+              className={
+                currentPage === totalPages || totalPages === 0
+                  ? "pointer-events-none opacity-50"
+                  : ""
+              }
+            />
+          </UI.PaginationItem>
+        )}
+
+        {onLastPage && (
+          <UI.PaginationItem>
+            <UI.PaginationLast
+              onClick={(e) => {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                  onLastPage();
                 }
               }}
               className={

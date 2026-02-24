@@ -17,7 +17,7 @@ export function SearchInput(props: Props) {
   }, props.debounceTimeout || 500);
 
   return (
-    <div className="relative flex-1 w-full bg-white">
+    <div className="relative flex-1 w-full bg-white rounded-md">
       <Search
         size="20px"
         className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none"

@@ -119,7 +119,10 @@ export function UsersPage(props: Props) {
           emptyMessage="Nenhum usuário encontrado"
           pagination={{
             page: 1,
-            total: 3,
+            totalPages: 1,
+            totalItems: 2,
+            onFirstPage: () => null,
+            onLastPage: () => null,
             onNextPage: () => null,
             onPreviousPage: () => null,
           }}

@@ -14,11 +14,14 @@ export type TableColumn<T> = {
 };
 
 export type Pagination = {
-  total: number;
+  totalPages: number;
   page: number;
+  totalItems: number;
   onPageChange?: (page: number) => void;
+  onFirstPage?: () => void;
   onPreviousPage?: () => void;
   onNextPage?: () => void;
+  onLastPage?: () => void;
   className?: string;
 };
 
